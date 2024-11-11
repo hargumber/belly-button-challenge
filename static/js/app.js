@@ -2,20 +2,35 @@
 function buildMetadata(sample) {
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
+    // console.log(data);
+    // console.log(sample);
+    
     // get the metadata field
-
+    const metadata = data.metadata;
 
     // Filter the metadata for the object with the desired sample number
-
+    const selected_object = metadata.find(metadata_ => metadata_.id == sample);
+    console.log(selected_object);
 
     // Use d3 to select the panel with id of `#sample-metadata`
-
+    const metadataPanel = d3.select("#sample-metadata");
 
     // Use `.html("") to clear any existing metadata
-
+    metadataPanel.html("");
 
     // Inside a loop, you will need to use d3 to append new
     // tags for each key-value in the filtered metadata.
+    
+    let metadataString = "";
+
+    for (const key in selected_object) {
+      if (selected_object.hasOwnProperty(key)) {
+          metadataString += `${key.toUpperCase()}: ${selected_object[key]}<br>`;
+      }
+    }
+
+    // Display the metadata string in the panel
+    metadataPanel.html(metadataString);
 
   });
 }
@@ -31,7 +46,7 @@ function buildCharts(sample) {
     // console.log(samples);
 
     const selected_sample = samples.find(sample_ => sample_.id === sample);
-    console.log(selected_sample);
+    // console.log(selected_sample);
 
     // Get the otu_ids, otu_labels, and sample_values
     let otu_ids = selected_sample.otu_ids;
@@ -89,7 +104,7 @@ function buildCharts(sample) {
 
     // Reverse the sliced array
     const reversedData = topTenData.reverse();
-    console.log(reversedData);
+    // console.log(reversedData);
 
     var data = [{
       type: 'bar',
@@ -145,6 +160,8 @@ function init() {
 
     // Build charts and metadata panel with the first sample
     buildCharts(selectedValue);
+
+    buildMetadata(selectedValue);
 
   });
 }
