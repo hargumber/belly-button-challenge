@@ -123,7 +123,6 @@ function buildCharts(sample) {
       }
   };
 
-
     // Render the Bar Chart
     Plotly.newPlot('bar', data, layout);
 
@@ -147,10 +146,10 @@ function init() {
     // option for each sample name.
     const samples = data.samples;
 
-    samples.forEach(function(sample_name) {
+    names.forEach(function(sample_name) {
       dropdown.append("option") // Append a new option element
-          .text(sample_name.id)           // Set the text of the option
-          .attr("value", sample_name.id); // Set the value attribute of the option
+          .text(sample_name)           // Set the text of the option
+          .attr("value", sample_name); // Set the value attribute of the option
       });
 
 
